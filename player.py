@@ -4,10 +4,10 @@ class Player:
         self.symbol = symbol
         
     def validLocation(self, location):
-        if location < 9 and location > 0 and self.board[int((location - 1) / 3)][(location - 1) % 3] == " ":
+        if location <= 9 and location > 0 and self.board[2 - int((location - 1) / 3)][(location - 1) % 3][0] == " ":
             return True
         else: 
             return False
 
     def turn(self, location):
-        self.board[int((location - 1) / 3)][(location - 1) % 3] = self.symbol
+        self.board[2 - int((location - 1) / 3)][(location - 1) % 3][0] = self.symbol
