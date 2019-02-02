@@ -1,17 +1,17 @@
 from player import Player
 from board import Board
-
-board = Board()
-gameboard = board.board
-player1 = Player("X", gameboard)
-bot = Player("O", gameboard)
+from bot import Bot
 
 notLost = True
 notQuit = True
 noList = ["no", "No", "n", "N"]
 
-print("Welcome to Unbeatable Tic Tac Toe, you will surely loose (or tie) ")
+print("Welcome to Unbeatable Tic Tac Toe, you will not win ")
 while notQuit:
+    board = Board()
+    gameboard = board.board
+    player1 = Player("X", gameboard)
+    bot = Bot("O", board)
     while notLost:
         board.display()
         while True:
@@ -20,11 +20,11 @@ while notQuit:
                 break
         player1.turn(playerInput)
         board.display()
-        #bot.turn(0)
-        notLost = board.testWin()
+        bot.turn()
+        print(str(board.board))
+        notLost = not board.testWin()
     if input("Want to try again? ") in noList:
         notQuit = False
     else:
         notLost = True
-        board.newBoard()
 print("Bye now ")
