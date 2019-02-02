@@ -19,10 +19,9 @@ while notQuit:
             if player1.validLocation(playerInput):
                 break
         player1.turn(playerInput)
-        board.display()
         bot.turn()
-        print(str(board.board))
         notLost = not board.testWin()
+    board.display()
     if input("Want to try again? ") in noList:
         notQuit = False
     else:

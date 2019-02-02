@@ -26,9 +26,8 @@ class Board:
                 return True
         if self.board[0][0] == self.board[1][1] == self.board[2][2] != " " or self.board[2][0] == self.board[1][1] == self.board[0][2] != " ":#testing diagonals
             return True
-        return False
-
-    def newBoard(self):
-        self.board = [[" "," "," "],
-                     [" "," "," "],
-                     [" "," "," "]]  
+        for row in self.board:
+            for column in row:
+                if column == " ":
+                    return False
+        return True
