@@ -3,7 +3,7 @@ class Bot:
         self.board = board
         self.gameboard = self.board.board
         self.symbol = symbol
-        self.symbols = ["X","O"]
+        self.symbols = ["O","X"]
 
     def turn(self):
         testRows = self.testRows()
@@ -15,6 +15,8 @@ class Bot:
             self.gameboard[testCols[2]][testCols[1]] = self.symbol
         elif testDiag[0]:
             self.gameboard[testDiag[1]][testDiag[2]] = self.symbol
+        elif self.gameboard[1][1] == " ":
+            self.gameboard[1][1] = self.symbol
 
     def testRows(self):
         for xo in self.symbols:
@@ -34,6 +36,8 @@ class Bot:
         return [False]
 
     def testDiag(self):
-        if self.gameboard[1][1] == " ":
-            return [True, 1, 1]
-        return [False]
+        for corner in range(4):
+            if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == self.gameboard[1][1] != " ":
+                return [True, self.board.corners[3 - corner][0], self.board.corners[3 - corner][1]]
+        print(":)")
+        return[False]

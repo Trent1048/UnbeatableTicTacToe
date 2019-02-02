@@ -3,9 +3,9 @@ class Board:
         self.board = [[" "," "," "],
                      [" "," "," "],
                      [" "," "," "]]   
-        self.edges = [self.board[0][1],self.board[1][0],self.board[1][2],self.board[2][1]]
-        self.corners = [self.board[0][0],self.board[0][2],self.board[2][0],self.board[2][2]]
-
+        self.edges = [[0,1],[1,0],[1,2],[2,1]]#self.board[this stuff]
+        self.corners = [[0,0],[0,2],[2,0],[2,2]]
+        
     def display(self):
         for row in range(3):
             for column in range(3):
@@ -30,4 +30,4 @@ class Board:
             for column in row:
                 if column == " ":
                     return False
-        return True
+        return True           
