@@ -28,4 +28,5 @@ while notQuit:
         notQuit = False
     else:
         notLost = True
-print("Bye now ")
+        print()
+print("\nBye now ")
