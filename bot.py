@@ -56,6 +56,7 @@ class Bot:
                     break
         elif self.board.turns == 2:
             for edge in range(4):
-                if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " ":
+                opEdge = self.board.oppositeSide(edge)
+                if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
                     self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
                     break
