@@ -5,7 +5,8 @@ class Board:
                      [" "," "," "]]   
         self.edges = [[0,1],[1,0],[1,2],[2,1]]#self.board[this stuff]
         self.corners = [[0,0],[0,2],[2,0],[2,2]]
-        
+        self.turns = 0
+
     def display(self):
         for row in range(3):
             for column in range(3):
@@ -31,3 +32,9 @@ class Board:
                 if column == " ":
                     return False
         return True           
+
+    def oppositeCorner(self, corner):#returns a len 2 list refering to location of corner in relationship to the board
+        return self.corners[3 - corner]
+
+    def oppositeSide(self, side):
+        return self.edges[3 - side]

@@ -17,6 +17,8 @@ class Bot:
             self.gameboard[testDiag[1]][testDiag[2]] = self.symbol
         elif self.gameboard[1][1] == " ":
             self.gameboard[1][1] = self.symbol
+        else:
+            self.prioritize()
 
     def testRows(self):
         for xo in self.symbols:
@@ -38,6 +40,22 @@ class Bot:
     def testDiag(self):
         for corner in range(4):
             if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == self.gameboard[1][1] != " ":
-                return [True, self.board.corners[3 - corner][0], self.board.corners[3 - corner][1]]
-        print(":)")
+                opCorner = self.board.oppositeCorner(corner)
+                if self.gameboard[opCorner[0]][opCorner[1]] == " ":
+                    return [True, opCorner[0], opCorner[1]]
         return[False]
+
+    def prioritize(self):
+        corners = []
+        for corner in range(4):
+            corners.append(self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]])
+        if self.board.turns != 2 or not "X" in corners:
+            for corner in range(4):
+                if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == " ":
+                    self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] = self.symbol
+                    break
+        elif self.board.turns == 2:
+            for edge in range(4):
+                if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " ":
+                    self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
+                    break
