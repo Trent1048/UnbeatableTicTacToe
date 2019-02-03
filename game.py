@@ -15,12 +15,14 @@ while notQuit:
     while notLost: #main game loop
         board.display()
         while True:
-            playerInput = int(input("Choose a spot on the numPad to put an X: "))
-            if player1.validLocation(playerInput):
+            playerInput = input("Choose a spot on the numPad to put an X: ")
+            if playerInput.isdigit() and player1.validLocation(int(playerInput)):
                 break
+            else:
+                print("INVALID INPUT")
         print()
         board.turns += 1
-        player1.turn(playerInput)
+        player1.turn(int(playerInput))
         bot.turn()
         notLost = not board.testWin()
     board.display()
