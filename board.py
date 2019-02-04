@@ -38,3 +38,26 @@ class Board:
 
     def oppositeSide(self, side):
         return self.edges[3 - side]
+
+    def cornerBetweenEdges(self, edge1, edge2):
+        edgePairs = [[0,1],[0,2],[1,3],[2,3]]
+        for edgePair in range(4):
+            if (edge1 == edgePairs[edgePair][0] and edge2 == edgePairs[edgePair][1]) or (edge1 == edgePairs[edgePair][1] and edge2 == edgePairs[edgePair][0]):
+                return edgePair
+
+    def toSingleArray(self):
+        singleBoard = []
+        for row in range(3):
+            for column in range(3):
+                singleBoard.append(self.board[row][column])
+        return singleBoard
+
+    def correctNumOfTurns(self):# returns true if you can add another O without it being unfair
+        numOfOs = 0
+        singleBoard = self.toSingleArray()
+        for o in range(9):
+            if singleBoard[o] == "O":
+                numOfOs += 1
+        if numOfOs == self.turns - 1:
+            return True
+        return False

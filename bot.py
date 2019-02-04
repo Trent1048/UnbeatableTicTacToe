@@ -47,14 +47,29 @@ class Bot:
 
     def prioritize(self):
         corners = []
-        for corner in range(4):
-            corners.append(self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]])
+        for cornEdge in range(4):
+            corners.append(self.gameboard[self.board.corners[cornEdge][0]][self.board.corners[cornEdge][1]])
         if self.board.turns != 2 or not "X" in corners:
-            for corner in range(4):
-                if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == " ":
-                    self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] = self.symbol
-                    break
-        elif self.board.turns == 2:
+            if self.board.turns == 2 and self.gameboard[1][1] != "X":
+                for edge in range(4):
+                    for otherEdge in range(4):
+                        cornerBetweenEdges = self.board.cornerBetweenEdges(edge,otherEdge)
+                        if cornerBetweenEdges != None and edge != otherEdge and self.gameboard[self.board.corners[cornerBetweenEdges][0]][self.board.corners[cornerBetweenEdges][1]] == " " and self.gameboard[self.board.edges[otherEdge][0]][self.board.edges[otherEdge][1]] == self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == "X":
+                            self.gameboard[self.board.corners[cornerBetweenEdges][0]][self.board.corners[cornerBetweenEdges][1]] = self.symbol
+                            break 
+                    numOfOs = 0
+                    singleBoard = self.board.toSingleArray()
+                    for o in range(9):
+                        if singleBoard[o] == "O":
+                            numOfOs += 1
+                    if numOfOs > 1:
+                        break
+            if self.board.correctNumOfTurns():
+                for corner in range(4):
+                    if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == " ":
+                        self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] = self.symbol
+                        break
+        else:
             for edge in range(4):
                 opEdge = self.board.oppositeSide(edge)
                 if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
