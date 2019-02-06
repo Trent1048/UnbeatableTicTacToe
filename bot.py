@@ -46,10 +46,17 @@ class Bot:
         return[False]
 
     def prioritize(self):
-        corners = []
-        for cornEdge in range(4):
-            corners.append(self.gameboard[self.board.corners[cornEdge][0]][self.board.corners[cornEdge][1]])
-        if self.board.turns != 2 or not "X" in corners:
+        xCornerCount = 0
+        for corner in range(4):
+            if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == "X":
+                xCornerCount += 1
+        if self.board.turns == 2 and xCornerCount == 2:
+            for edge in range(4):
+                opEdge = self.board.oppositeSide(edge)
+                if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
+                    self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
+                    break
+        else:
             if self.board.turns == 2 and self.gameboard[1][1] != "X":
                 for edge in range(4):
                     for otherEdge in range(4):
@@ -69,9 +76,8 @@ class Bot:
                     if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == " ":
                         self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] = self.symbol
                         break
-        else:
-            for edge in range(4):
-                opEdge = self.board.oppositeSide(edge)
-                if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
-                    self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
-                    break
+            if self.board.correctNumOfTurns():
+                for edge in range(4):
+                    if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " ":
+                        self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
+                        break
