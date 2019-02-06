@@ -47,10 +47,14 @@ class Bot:
 
     def prioritize(self):
         xCornerCount = 0
+        xEdgeCount = 0
         for corner in range(4):
             if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == "X":
                 xCornerCount += 1
-        if self.board.turns == 2 and xCornerCount == 2:
+        for edge in range(4):
+            if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == "X":
+                xEdgeCount += 1
+        if self.board.turns == 2 and (xCornerCount == 2 or (xCornerCount == 1 and xEdgeCount == 1)):
             for edge in range(4):
                 opEdge = self.board.oppositeSide(edge)
                 if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
