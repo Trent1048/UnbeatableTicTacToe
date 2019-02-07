@@ -14,8 +14,8 @@ while notQuit:
     bot = Bot("O", board)
     while notLost: #main game loop
         board.display()
-        while True:
-            playerInput = input("Choose a spot on the numPad to put an X: ")
+        while True: #make sure input is good loop
+            playerInput = input("Choose a spot on the num pad to put an X: ")
             if playerInput.isdigit() and player1.validLocation(int(playerInput)):
                 break
             else:

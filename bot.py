@@ -5,7 +5,7 @@ class Bot:
         self.symbol = symbol
         self.symbols = ["O","X"]
 
-    def turn(self):
+    def turn(self):#first tests if there is 2 of the same symbol in a line so it can either block or win
         testRows = self.testRows()
         testCols = self.testCols()
         testDiag = self.testDiag()
@@ -18,7 +18,7 @@ class Bot:
         elif self.gameboard[1][1] == " ":
             self.gameboard[1][1] = self.symbol
         else:
-            self.prioritize()
+            self.prioritize()#if nothing above was triggered, it will go through this function that is set up to block forks and place O's strategically 
 
     def testRows(self):
         for xo in self.symbols:
@@ -53,27 +53,22 @@ class Bot:
                 xCornerCount += 1
             if self.gameboard[self.board.edges[cornEdge][0]][self.board.edges[cornEdge][1]] == "X":
                 xEdgeCount += 1   
-        if self.board.turns == 2 and (xCornerCount == 2 or (xCornerCount == 1 and xEdgeCount == 1)):
+        if self.board.turns == 2 and (xCornerCount == 2 or (xCornerCount == 1 and xEdgeCount == 1)):#blocks the opposite diagonals strat and the edge and corner on opposite side strat
             for edge in range(4):
                 opEdge = self.board.oppositeSide(edge)
                 if self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == " " == self.gameboard[opEdge[0]][opEdge[1]]:
                     self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] = self.symbol
                     break
         else:
-            for edge in range(4):
+            for edge in range(4):#blocks the empty corner between 2 edges strat
                 for otherEdge in range(4):
                     cornerBetweenEdges = self.board.cornerBetweenEdges(edge,otherEdge)
                     if cornerBetweenEdges != None and edge != otherEdge and self.gameboard[self.board.corners[cornerBetweenEdges][0]][self.board.corners[cornerBetweenEdges][1]] == " " and self.gameboard[self.board.edges[otherEdge][0]][self.board.edges[otherEdge][1]] == self.gameboard[self.board.edges[edge][0]][self.board.edges[edge][1]] == "X":
                         self.gameboard[self.board.corners[cornerBetweenEdges][0]][self.board.corners[cornerBetweenEdges][1]] = self.symbol
                         break 
-                numOfOs = 0
-                singleBoard = self.board.toSingleArray()
-                for o in range(9):
-                    if singleBoard[o] == "O":
-                        numOfOs += 1
-                if numOfOs > 1:
+                if not self.board.correctNumOfTurns():
                     break
-            if self.board.correctNumOfTurns():
+            if self.board.correctNumOfTurns():#if nothing else in prioritize worked, these 2 lower if statements will ensure that O gets a turn 
                 for corner in range(4):
                     if self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] == " ":
                         self.gameboard[self.board.corners[corner][0]][self.board.corners[corner][1]] = self.symbol
