@@ -2,7 +2,6 @@ from player import Player
 from board import Board
 from bot import Bot
 
-
 notLost = True
 notQuit = True
 noList = ["no", "No", "n", "N"]
