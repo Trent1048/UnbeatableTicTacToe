@@ -1,11 +1,16 @@
 class Board:
-    def __init__(self):
-        self.board = [[" "," "," "],
-                     [" "," "," "],
-                     [" "," "," "]]   
-        self.edges = [[0,1],[1,0],[1,2],[2,1]]#self.board[this stuff]
-        self.corners = [[0,0],[0,2],[2,0],[2,2]]
-        self.turns = 0
+    def __init__(self, display = False):
+        if not display:
+            self.board = [[" "," "," "],
+                         [" "," "," "],
+                         [" "," "," "]]   
+            self.edges = [[0,1],[1,0],[1,2],[2,1]]#self.board[this stuff]
+            self.corners = [[0,0],[0,2],[2,0],[2,2]]
+            self.turns = 0
+        else:
+            self.board = [["7","8","9"],
+                         ["4","5","6"],
+                         ["1","2","3"]] 
 
     def display(self):#prints out the board in a nice looking way
         for row in range(3):
